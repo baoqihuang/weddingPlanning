@@ -63,4 +63,16 @@ export const defaultChecklistItems: ChecklistItem[] = [
   { id: 'c24', task: 'Final guest count to caterer', category: 'Final Week', dueDate: '2026-10-25', status: 'notStarted', assignee: '' },
   { id: 'c25', task: 'Rehearsal dinner', category: 'Final Week', dueDate: '2026-10-31', status: 'notStarted', assignee: '' },
   { id: 'c26', task: 'Pack for honeymoon', category: 'Final Week', dueDate: '2026-10-30', status: 'notStarted', assignee: '' },
+
+  // Additional items
+  { id: 'c27', task: '選Photo Booth', category: 'Photography & Video', dueDate: '', status: 'notStarted', assignee: '' },
+  { id: 'c28', task: '買一次性膠片機', category: 'Photography & Video', dueDate: '', status: 'notStarted', assignee: '' },
+  { id: 'c29', task: '選花', category: 'Flowers & Décor', dueDate: '', status: 'notStarted', assignee: '' },
+  { id: 'c30', task: '選甜品', category: 'Venue & Catering', dueDate: '', status: 'notStarted', assignee: '' },
+  { id: 'c31', task: '檸檬茶在草坪婚禮', category: 'Venue & Catering', dueDate: '', status: 'notStarted', assignee: '' },
+  { id: 'c32', task: '和文兄說打麻將', category: 'Music & Entertainment', dueDate: '', status: 'notStarted', assignee: '' },
+  { id: 'c33', task: '選清吧地址', category: 'Venue & Catering', dueDate: '', status: 'notStarted', assignee: '' },
+  { id: 'c34', task: '草坪婚禮活動', category: 'Ceremony', dueDate: '', status: 'notStarted', assignee: '' },
+  { id: 'c35', task: '喜糖選擇', category: 'Logistics', dueDate: '', status: 'notStarted', assignee: '' },
+  { id: 'c36', task: '喜糖包裝', category: 'Logistics', dueDate: '', status: 'notStarted', assignee: '' },
 ];
