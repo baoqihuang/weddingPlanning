@@ -15,10 +15,11 @@ interface Guest {
   side: GuestSide;
   dietary: string;
   notes: string;
+  roomAssignment?: string;
 }
 
 export function Guests() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { isGroomBride, setAccessTier } = useAccess();
   const [showModal, setShowModal] = useState(!isGroomBride);
   const [guests, setGuests] = useCloudStorage<Guest[]>('guests', 'wedding-guests', []);
@@ -229,6 +230,7 @@ export function Guests() {
                   <th style={styles.th}>{t.guests.colEmail}</th>
                   <th style={styles.th}>{t.guests.colSide}</th>
                   <th style={styles.th}>{t.guests.colStatus}</th>
+                  <th style={styles.th}>{lang === 'en' ? 'Room' : '房間'}</th>
                   <th style={styles.th}></th>
                 </tr>
               </thead>
@@ -262,6 +264,18 @@ export function Guests() {
                           <option value="confirmed">{t.guests.confirmed}</option>
                           <option value="declined">{t.guests.declinedStatus}</option>
                         </select>
+                      </td>
+                      <td style={styles.td}>
+                        <input
+                          type="text"
+                          value={guest.roomAssignment || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setGuests((prev) => prev.map((g) => g.id === guest.id ? { ...g, roomAssignment: val } : g));
+                          }}
+                          placeholder={lang === 'en' ? 'e.g. Suite 201' : '如：套房201'}
+                          style={{ fontSize: '0.8rem', padding: '4px 8px', minWidth: '110px', border: '1px solid var(--color-primary-light)', borderRadius: '6px' }}
+                        />
                       </td>
                       <td style={styles.td}>
                         <button

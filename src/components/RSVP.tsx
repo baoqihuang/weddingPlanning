@@ -116,7 +116,6 @@ export function RSVP() {
             { num: stats.declined, label: t.rsvp.declined, color: '#c62828' },
             { num: stats.totalAdults, label: t.rsvp.totalAdults, color: 'var(--color-primary-dark)' },
             { num: stats.totalKids, label: t.rsvp.totalKids, color: 'var(--color-primary-dark)' },
-            { num: stats.needHotel, label: t.rsvp.needingHotel, color: 'var(--color-primary-dark)' },
           ].map((s) => (
             <div key={s.label} className="card" style={{ textAlign: 'center', padding: '16px' }}>
               <span style={{ display: 'block', fontSize: '2rem', fontWeight: 700, color: s.color }}>{s.num}</span>
@@ -133,7 +132,6 @@ export function RSVP() {
                 <th style={thStyle}>{t.rsvp.attending}</th>
                 <th style={thStyle}>{t.rsvp.numAdults}</th>
                 <th style={thStyle}>{t.rsvp.numKids}</th>
-                <th style={thStyle}>{t.rsvp.needHotel}</th>
                 <th style={thStyle}>{t.rsvp.dietaryRestrictions}</th>
                 <th style={thStyle}>{t.rsvp.notes}</th>
                 <th style={thStyle}>{lang === 'en' ? 'Room Assignment' : '房間安排'}</th>
@@ -146,7 +144,6 @@ export function RSVP() {
                   <td style={tdStyle}>{entry.attending ? '✓' : '✗'}</td>
                   <td style={tdStyle}>{entry.numAdults}</td>
                   <td style={tdStyle}>{entry.numKids}</td>
-                  <td style={tdStyle}>{entry.needHotel ? '✓' : '—'}</td>
                   <td style={tdStyle}>{entry.dietary || '—'}</td>
                   <td style={tdStyle}>{entry.message || '—'}</td>
                   <td style={tdStyle}>
