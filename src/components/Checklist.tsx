@@ -22,7 +22,7 @@ export function Checklist() {
     assignee: '',
   });
 
-  const readOnly = accessTier === 'groomsmenBridesmaid';
+  const isGroomBride = accessTier === 'groomBride';
 
   const filteredItems = useMemo(() => {
     const statusOrder: Record<string, number> = { inProgress: 0, notStarted: 1, done: 2 };
@@ -58,12 +58,11 @@ export function Checklist() {
   }
 
   const updateItem = (id: string, updates: Partial<ChecklistItem>) => {
-    if (readOnly) return;
     setItems((prev) => prev.map((i) => (i.id === id ? { ...i, ...updates } : i)));
   };
 
   const deleteItem = (id: string) => {
-    if (readOnly) return;
+    if (!isGroomBride) return;
     setItems((prev) => prev.filter((i) => i.id !== id));
   };
 
@@ -80,16 +79,10 @@ export function Checklist() {
     return 'var(--color-text-muted)';
   };
 
-  const statusLabel = (status: string) => {
-    if (status === 'done') return t.checklist.status.done;
-    if (status === 'inProgress') return t.checklist.status.inProgress;
-    return t.checklist.status.notStarted;
-  };
-
   return (
     <div className="container section" style={{ paddingTop: '80px' }}>
       <h1 className="section-title">
-        {t.checklist.title} {readOnly && <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>{t.checklist.readOnly}</span>}
+        {t.checklist.title}
       </h1>
 
       {/* Progress */}
@@ -116,7 +109,7 @@ export function Checklist() {
             <option key={m} value={m}>{m}</option>
           ))}
         </select>
-        {!readOnly && (
+        {isGroomBride && (
           <button className="btn btn-primary btn-sm" onClick={() => setShowAddForm(!showAddForm)}>
             {showAddForm ? t.checklist.cancel : t.checklist.addTask}
           </button>
@@ -124,7 +117,7 @@ export function Checklist() {
       </div>
 
       {/* Add Form */}
-      {showAddForm && !readOnly && (
+      {showAddForm && isGroomBride && (
         <div className="card" style={{ marginBottom: '20px' }}>
           <div style={styles.formGrid}>
             <div className="form-group">
@@ -159,14 +152,12 @@ export function Checklist() {
       {filteredItems.map((item) => (
         <div key={item.id} className="card" style={styles.itemCard}>
           <div style={styles.itemRow}>
-            {!readOnly && (
               <input
                 type="checkbox"
                 checked={item.status === 'done'}
                 onChange={(e) => updateItem(item.id, { status: e.target.checked ? 'done' : 'notStarted' })}
                 style={styles.checkbox}
               />
-            )}
             <div style={styles.itemInfo}>
               <span style={{ ...styles.itemTask, textDecoration: item.status === 'done' ? 'line-through' : 'none' }}>
                 {item.task}
@@ -174,50 +165,35 @@ export function Checklist() {
               <span style={styles.itemMeta}>
                 {item.category} {item.dueDate && `· ${item.dueDate}`}
               </span>
-              {!readOnly ? (
-                <select
-                  value={item.assignee || ''}
-                  onChange={(e) => updateItem(item.id, { assignee: e.target.value })}
-                  style={styles.assigneeSelect}
-                >
-                  <option value="">{lang === 'en' ? '— Unassigned —' : '— 未分配 —'}</option>
-                  {[...weddingPartyMembers, 'All Bridesmaids', 'All Groomsmen'].map((m) => (
-                    <option key={m} value={m}>{m}</option>
-                  ))}
-                </select>
-              ) : item.assignee ? (
-                <span style={styles.assigneeText}>👤 {item.assignee}</span>
-              ) : null}
-              {!readOnly ? (
-                <input
-                  type="text"
-                  value={item.notes || ''}
-                  onChange={(e) => updateItem(item.id, { notes: e.target.value })}
-                  placeholder={lang === 'en' ? 'Add a note...' : '添加備註...'}
-                  style={styles.notesInput}
-                />
-              ) : item.notes ? (
-                <span style={styles.notesText}>💬 {item.notes}</span>
-              ) : null}
+              <select
+                value={item.assignee || ''}
+                onChange={(e) => updateItem(item.id, { assignee: e.target.value })}
+                style={styles.assigneeSelect}
+              >
+                <option value="">{lang === 'en' ? '— Unassigned —' : '— 未分配 —'}</option>
+                {[...weddingPartyMembers, 'All Bridesmaids', 'All Groomsmen'].map((m) => (
+                  <option key={m} value={m}>{m}</option>
+                ))}
+              </select>
+              <input
+                type="text"
+                value={item.notes || ''}
+                onChange={(e) => updateItem(item.id, { notes: e.target.value })}
+                placeholder={lang === 'en' ? 'Add a note...' : '添加備註...'}
+                style={styles.notesInput}
+              />
             </div>
             <div style={styles.itemRight}>
-              {!readOnly && (
-                <select
-                  value={item.status}
-                  onChange={(e) => updateItem(item.id, { status: e.target.value as ChecklistItem['status'] })}
-                  style={{ ...styles.statusSelect, borderColor: statusColor(item.status), color: statusColor(item.status) }}
-                >
-                  <option value="notStarted">{t.checklist.status.notStarted}</option>
-                  <option value="inProgress">{t.checklist.status.inProgress}</option>
-                  <option value="done">{t.checklist.status.done}</option>
-                </select>
-              )}
-              {readOnly && (
-                <span style={{ color: statusColor(item.status), fontSize: '0.85rem', fontWeight: 500 }}>
-                  {statusLabel(item.status)}
-                </span>
-              )}
-              {!readOnly && (
+              <select
+                value={item.status}
+                onChange={(e) => updateItem(item.id, { status: e.target.value as ChecklistItem['status'] })}
+                style={{ ...styles.statusSelect, borderColor: statusColor(item.status), color: statusColor(item.status) }}
+              >
+                <option value="notStarted">{t.checklist.status.notStarted}</option>
+                <option value="inProgress">{t.checklist.status.inProgress}</option>
+                <option value="done">{t.checklist.status.done}</option>
+              </select>
+              {isGroomBride && (
                 <button className="btn btn-danger btn-sm" onClick={() => deleteItem(item.id)}>
                   {t.checklist.delete}
                 </button>
