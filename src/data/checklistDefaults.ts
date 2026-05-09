@@ -5,6 +5,7 @@ export interface ChecklistItem {
   dueDate: string;
   status: 'notStarted' | 'inProgress' | 'done';
   assignee: string;
+  notes?: string;
 }
 
 export const weddingPartyMembers = [

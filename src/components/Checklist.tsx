@@ -6,7 +6,7 @@ import { AccessCodeModal } from './AccessCodeModal';
 import { defaultChecklistItems, checklistCategories, weddingPartyMembers, type ChecklistItem } from '../data/checklistDefaults';
 
 export function Checklist() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { accessTier, hasCrewAccess, setAccessTier } = useAccess();
   const [showModal, setShowModal] = useState(!hasCrewAccess);
   const [items, setItems] = useCloudStorage<ChecklistItem[]>('checklist', 'wedding-checklist', defaultChecklistItems);
@@ -171,6 +171,17 @@ export function Checklist() {
               <span style={styles.itemMeta}>
                 {item.category} {item.dueDate && `· ${item.dueDate}`} {item.assignee && `· ${item.assignee}`}
               </span>
+              {!readOnly ? (
+                <input
+                  type="text"
+                  value={item.notes || ''}
+                  onChange={(e) => updateItem(item.id, { notes: e.target.value })}
+                  placeholder={lang === 'en' ? 'Add a note...' : '添加備註...'}
+                  style={styles.notesInput}
+                />
+              ) : item.notes ? (
+                <span style={styles.notesText}>💬 {item.notes}</span>
+              ) : null}
             </div>
             <div style={styles.itemRight}>
               {!readOnly && (
@@ -263,6 +274,22 @@ const styles: Record<string, React.CSSProperties> = {
   itemMeta: {
     fontSize: '0.8rem',
     color: 'var(--color-text-muted)',
+  },
+  notesInput: {
+    marginTop: '4px',
+    padding: '4px 8px',
+    fontSize: '0.8rem',
+    border: '1px solid var(--color-primary-light)',
+    borderRadius: '6px',
+    color: 'var(--color-text)',
+    background: 'var(--color-primary-light)',
+    width: '100%',
+  },
+  notesText: {
+    marginTop: '4px',
+    fontSize: '0.8rem',
+    color: 'var(--color-text-muted)',
+    fontStyle: 'italic',
   },
   itemRight: {
     display: 'flex',
