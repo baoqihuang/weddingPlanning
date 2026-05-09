@@ -181,12 +181,76 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
         </div>
       </div>
 
+      {/* Alipay Setup Guide */}
+      <div className="card">
+        <h2>💳 Setting Up Alipay (For US Guests)</h2>
+        <p style={{ fontSize: '.9rem', color: 'var(--color-text-light)', lineHeight: 1.6, marginBottom: '1rem' }}>
+          Cash is rarely used in mainland China — almost everything is paid via <strong>mobile QR codes</strong>. Setting up <strong>Alipay</strong> before your trip is highly recommended.
+        </p>
+        <div className="journey-steps">
+          <div className="step">
+            <div className="step-num">1</div>
+            <div className="step-body">
+              <h3>Download Alipay</h3>
+              <p>Search <strong>"Alipay"</strong> in the App Store (iOS) or Google Play Store (Android) and install the app.</p>
+            </div>
+          </div>
+          <div className="step">
+            <div className="step-num">2</div>
+            <div className="step-body">
+              <h3>Sign Up with Your US Phone Number</h3>
+              <p>Open the app, tap <strong>"Sign Up"</strong>, select country code <strong>+1 (United States)</strong>, enter your phone number, and complete SMS verification.</p>
+            </div>
+          </div>
+          <div className="step">
+            <div className="step-num">3</div>
+            <div className="step-body">
+              <h3>Complete Identity Verification</h3>
+              <p>Go to <strong>"Me" → "Tour Pass"</strong> or <strong>"My Cards"</strong>. Upload a clear photo of your <strong>passport</strong> and enter your details exactly as shown. Approval is usually instant (can take up to 24 hours).</p>
+            </div>
+          </div>
+          <div className="step">
+            <div className="step-num">4</div>
+            <div className="step-body">
+              <h3>Bind Your VISA Credit Card</h3>
+              <p>Go to <strong>"Me" → "Bank Cards" → "Add Card"</strong>. Enter your VISA card details and billing address. Alipay may run a small pre-authorization charge to verify your card.</p>
+              <div className="step-meta">
+                <span className="meta-chip chip-tip">Mastercard & JCB also supported</span>
+              </div>
+            </div>
+          </div>
+          <div className="step">
+            <div className="step-num">5</div>
+            <div className="step-body">
+              <h3>Top Up via "Tour Pass"</h3>
+              <p>Alipay's <strong>Tour Pass</strong> lets you load RMB from your VISA card (min ¥100). The balance is valid for <strong>90 days</strong> and can be topped up as needed. Unspent funds are automatically refunded.</p>
+            </div>
+          </div>
+          <div className="step">
+            <div className="step-num">6</div>
+            <div className="step-body">
+              <h3>Pay by Scanning QR Codes</h3>
+              <p>Use the <strong>"Scan"</strong> button to scan a merchant's QR code, or show your <strong>"Pay"</strong> QR code for the merchant to scan. It works at restaurants, shops, taxis, street vendors — almost everywhere!</p>
+            </div>
+          </div>
+        </div>
+        <div className="warn-box" style={{ marginTop: '1rem' }}>
+          <span className="tip-icon">⚠️</span>
+          <div>
+            <strong>Important tips:</strong><br/>
+            • Call your bank before traveling to <strong>pre-authorize China transactions</strong> — some US banks block them by default.<br/>
+            • No Chinese bank account is needed — the Tour Pass is designed for foreign visitors.<br/>
+            • You <strong>cannot withdraw cash</strong> from Tour Pass — bring your debit card for ATM withdrawals if you need cash.
+          </div>
+        </div>
+      </div>
+
       {/* Essential Tips */}
       <div className="card">
         <h2>Essential Tips for All Guests</h2>
         <div className="essentials-grid">
           {[
-            { icon: '💳', title: 'Currency & Payments', body: 'China uses CNY / RMB (¥). WeChat Pay and Alipay are the dominant payment methods — link a foreign card before you arrive.' },
+            { icon: '💳', title: 'Currency & Payments', body: 'China uses CNY / RMB (¥). WeChat Pay and Alipay are the dominant payment methods. See the Alipay setup guide above to get started.' },
             { icon: '📱', title: 'Mobile & Internet', body: 'Google, WhatsApp, Instagram & most Western apps are blocked in mainland China. Download a VPN before entering China.' },
             { icon: '🗺', title: 'Maps & Navigation', body: 'Google Maps works poorly in China. Download Baidu Maps (百度地圖) or Amap (高德地圖) for offline navigation.' },
             { icon: '🌡️', title: 'Weather in Jiangxi', body: 'November is autumn — mild and pleasant, 10–20°C. Light layers and a jacket are recommended.' },
@@ -490,12 +554,76 @@ function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
         </div>
       </div>
 
+      {/* Alipay Setup Guide */}
+      <div className="card">
+        <h2>💳 設定支付寶（適用於美國賓客）</h2>
+        <p style={{ fontSize: '.9rem', color: 'var(--color-text-light)', lineHeight: 1.6, marginBottom: '1rem' }}>
+          中國大陸幾乎不使用現金——絕大部分消費都透過<strong>手機QR碼支付</strong>。強烈建議在出發前設定好<strong>支付寶（Alipay）</strong>。
+        </p>
+        <div className="journey-steps">
+          <div className="step">
+            <div className="step-num">1</div>
+            <div className="step-body">
+              <h3>下載支付寶</h3>
+              <p>在 App Store（iOS）或 Google Play（Android）搜尋<strong>「Alipay」</strong>並安裝應用程式。</p>
+            </div>
+          </div>
+          <div className="step">
+            <div className="step-num">2</div>
+            <div className="step-body">
+              <h3>使用美國手機號碼註冊</h3>
+              <p>打開應用程式，點擊<strong>「註冊」</strong>，選擇國家代碼<strong>+1（美國）</strong>，輸入手機號碼並完成短訊驗證。</p>
+            </div>
+          </div>
+          <div className="step">
+            <div className="step-num">3</div>
+            <div className="step-body">
+              <h3>完成身份驗證</h3>
+              <p>進入<strong>「我的」→「Tour Pass」</strong>或<strong>「我的銀行卡」</strong>。上傳清晰的<strong>護照照片</strong>，並按護照上的資料準確填寫。審批通常即時完成（最多可能需要24小時）。</p>
+            </div>
+          </div>
+          <div className="step">
+            <div className="step-num">4</div>
+            <div className="step-body">
+              <h3>綁定 VISA 信用卡</h3>
+              <p>進入<strong>「我的」→「銀行卡」→「添加銀行卡」</strong>。輸入 VISA 卡資料及帳單地址。支付寶可能會進行小額預授權以驗證卡片。</p>
+              <div className="step-meta">
+                <span className="meta-chip chip-tip">亦支援 Mastercard 及 JCB</span>
+              </div>
+            </div>
+          </div>
+          <div className="step">
+            <div className="step-num">5</div>
+            <div className="step-body">
+              <h3>透過「Tour Pass」充值</h3>
+              <p>支付寶的<strong>Tour Pass</strong>可用 VISA 卡充值人民幣（最低¥100）。餘額有效期為<strong>90天</strong>，可隨時充值。未用完的金額會自動退回。</p>
+            </div>
+          </div>
+          <div className="step">
+            <div className="step-num">6</div>
+            <div className="step-body">
+              <h3>掃碼付款</h3>
+              <p>使用<strong>「掃一掃」</strong>功能掃描商家QR碼，或出示你的<strong>「付款碼」</strong>讓商家掃描。餐廳、商店、的士、路邊攤——幾乎無處不可用！</p>
+            </div>
+          </div>
+        </div>
+        <div className="warn-box" style={{ marginTop: '1rem' }}>
+          <span className="tip-icon">⚠️</span>
+          <div>
+            <strong>重要提示：</strong><br/>
+            • 出發前請致電銀行<strong>預先授權中國大陸交易</strong>——部分美國銀行會預設攔截此類交易。<br/>
+            • 無需中國銀行帳戶——Tour Pass 專為外國旅客設計。<br/>
+            • Tour Pass <strong>不可提取現金</strong>——如需現金，請攜帶銀行卡在ATM提款。
+          </div>
+        </div>
+      </div>
+
       {/* Essential Tips */}
       <div className="card">
         <h2>所有賓客注意事項</h2>
         <div className="essentials-grid">
           {[
-            { icon: '💳', title: '貨幣及支付', body: '中國大陸使用人民幣（CNY/¥）。微信支付及支付寶是主要付款方式——請出發前綁定外國銀行卡。' },
+            { icon: '💳', title: '貨幣及支付', body: '中國大陸使用人民幣（CNY/¥）。微信支付及支付寶是主要付款方式。請參閱上方的支付寶設定指南。' },
             { icon: '📱', title: '手機及網絡', body: 'Google、WhatsApp、Instagram等大部分西方應用程式在中國大陸均被封鎖。請在進入中國前下載VPN。' },
             { icon: '🗺', title: '地圖及導航', body: 'Google Maps在中國效果欠佳。請下載百度地圖或高德地圖供離線使用。' },
             { icon: '🌡️', title: '江西天氣', body: '十一月為秋季，氣候溫和宜人，氣溫約10至20°C。建議穿著薄外套及多層衣物。' },
