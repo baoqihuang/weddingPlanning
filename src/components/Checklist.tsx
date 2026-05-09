@@ -1,15 +1,14 @@
 import { useState, useMemo } from 'react';
 import { useLang } from '../context/LanguageContext';
+import { useAccess } from '../context/AccessContext';
 import { useCloudStorage } from '../hooks/useCloudStorage';
 import { AccessCodeModal } from './AccessCodeModal';
 import { defaultChecklistItems, checklistCategories, type ChecklistItem } from '../data/checklistDefaults';
 
-type Role = 'groomBride' | 'groomsmenBridesmaid' | null;
-
 export function Checklist() {
   const { t } = useLang();
-  const [role, setRole] = useState<Role>(null);
-  const [showModal, setShowModal] = useState(true);
+  const { accessTier, hasCrewAccess, setAccessTier } = useAccess();
+  const [showModal, setShowModal] = useState(!hasCrewAccess);
   const [items, setItems] = useCloudStorage<ChecklistItem[]>('checklist', 'wedding-checklist', defaultChecklistItems);
   const [filterCat, setFilterCat] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
@@ -22,7 +21,7 @@ export function Checklist() {
     assignee: '',
   });
 
-  const readOnly = role === 'groomsmenBridesmaid';
+  const readOnly = accessTier === 'groomsmenBridesmaid';
 
   const filteredItems = useMemo(() => {
     return items.filter((item) => {
@@ -38,14 +37,14 @@ export function Checklist() {
     inProgress: items.filter((i) => i.status === 'inProgress').length,
   }), [items]);
 
-  if (!role) {
+  if (!hasCrewAccess) {
     if (!showModal) return null;
     return (
       <div className="container section" style={{ paddingTop: '80px' }}>
         <h1 className="section-title">{t.checklist.title}</h1>
         <p style={{ textAlign: 'center', color: 'var(--color-text-light)' }}>{t.checklist.accessPrompt}</p>
         <AccessCodeModal
-          onSuccess={(r) => setRole(r)}
+          onSuccess={(r) => { setAccessTier(r); setShowModal(false); }}
           onCancel={() => setShowModal(false)}
           allowGroomsmenCode
         />

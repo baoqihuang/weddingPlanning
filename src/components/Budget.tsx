@@ -1,13 +1,14 @@
 import { useState, useMemo } from 'react';
 import { useLang } from '../context/LanguageContext';
+import { useAccess } from '../context/AccessContext';
 import { useCloudStorage } from '../hooks/useCloudStorage';
 import { AccessCodeModal } from './AccessCodeModal';
 import { defaultBudgetItems, budgetCategories, type BudgetItem } from '../data/budgetDefaults';
 
 export function Budget() {
   const { t } = useLang();
-  const [authenticated, setAuthenticated] = useState(false);
-  const [showModal, setShowModal] = useState(true);
+  const { isGroomBride, setAccessTier } = useAccess();
+  const [showModal, setShowModal] = useState(!isGroomBride);
   const [items, setItems] = useCloudStorage<BudgetItem[]>('budget', 'wedding-budget', defaultBudgetItems);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<BudgetItem>>({});
@@ -37,14 +38,14 @@ export function Budget() {
     return groups;
   }, [items]);
 
-  if (!authenticated) {
+  if (!isGroomBride) {
     if (!showModal) return null;
     return (
       <div className="container section" style={{ paddingTop: '80px' }}>
         <h1 className="section-title">{t.budget.title}</h1>
         <p style={{ textAlign: 'center', color: 'var(--color-text-light)' }}>{t.budget.accessPrompt}</p>
         <AccessCodeModal
-          onSuccess={() => setAuthenticated(true)}
+          onSuccess={(r) => { setAccessTier(r); setShowModal(false); }}
           onCancel={() => setShowModal(false)}
         />
       </div>

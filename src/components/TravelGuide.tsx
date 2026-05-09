@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { useLang } from '../context/LanguageContext';
+import { useAccess } from '../context/AccessContext';
 import { AccessCodeModal } from './AccessCodeModal';
 
 export function TravelGuide() {
   const { lang } = useLang();
   const [route, setRoute] = useState<'us' | 'hk'>('us');
-  const [tripUnlocked, setTripUnlocked] = useState(false);
+  const { isGroomBride, setAccessTier } = useAccess();
   const [showTripModal, setShowTripModal] = useState(false);
 
   return lang === 'zh-TW'
-    ? <TravelZH route={route} setRoute={setRoute} tripUnlocked={tripUnlocked} onUnlockTrip={() => setShowTripModal(true)} showTripModal={showTripModal} onTripModalSuccess={() => { setTripUnlocked(true); setShowTripModal(false); }} onTripModalCancel={() => setShowTripModal(false)} />
-    : <TravelEN route={route} setRoute={setRoute} tripUnlocked={tripUnlocked} onUnlockTrip={() => setShowTripModal(true)} showTripModal={showTripModal} onTripModalSuccess={() => { setTripUnlocked(true); setShowTripModal(false); }} onTripModalCancel={() => setShowTripModal(false)} />;
+    ? <TravelZH route={route} setRoute={setRoute} tripUnlocked={isGroomBride} onUnlockTrip={() => { if (isGroomBride) return; setShowTripModal(true); }} showTripModal={showTripModal} onTripModalSuccess={(r) => { setAccessTier(r); setShowTripModal(false); }} onTripModalCancel={() => setShowTripModal(false)} />
+    : <TravelEN route={route} setRoute={setRoute} tripUnlocked={isGroomBride} onUnlockTrip={() => { if (isGroomBride) return; setShowTripModal(true); }} showTripModal={showTripModal} onTripModalSuccess={(r) => { setAccessTier(r); setShowTripModal(false); }} onTripModalCancel={() => setShowTripModal(false)} />;
 }
 
 interface RouteProps {
@@ -19,7 +20,7 @@ interface RouteProps {
   tripUnlocked: boolean;
   onUnlockTrip: () => void;
   showTripModal: boolean;
-  onTripModalSuccess: () => void;
+  onTripModalSuccess: (role: 'groomBride' | 'groomsmenBridesmaid') => void;
   onTripModalCancel: () => void;
 }
 

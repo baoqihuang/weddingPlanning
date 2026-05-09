@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
 import { RoleProvider, useRole } from './context/RoleContext';
+import { AccessProvider } from './context/AccessContext';
 import { Splash } from './components/Splash';
 import { RoleSelect } from './components/RoleSelect';
 import { Navbar } from './components/Navbar';
@@ -47,7 +48,9 @@ function App() {
   return (
     <LanguageProvider>
       <RoleProvider>
-        <AppInner />
+        <AccessProvider>
+          <AppInner />
+        </AccessProvider>
       </RoleProvider>
     </LanguageProvider>
   );

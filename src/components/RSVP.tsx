@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useLang } from '../context/LanguageContext';
+import { useAccess } from '../context/AccessContext';
 import { useCloudStorage } from '../hooks/useCloudStorage';
 import { AccessCodeModal } from './AccessCodeModal';
 
@@ -30,7 +31,8 @@ export function RSVP() {
   const [bringingKids, setBringingKids] = useState(false);
   const [numKids, setNumKids] = useState(0);
   const [submitted, setSubmitted] = useState(false);
-  const [showViewer, setShowViewer] = useState(false);
+  const { isGroomBride, setAccessTier } = useAccess();
+  const [showViewer, setShowViewer] = useState(isGroomBride);
   const [showAccessModal, setShowAccessModal] = useState(false);
 
   // Check if name matches existing guest entry
@@ -176,15 +178,19 @@ export function RSVP() {
       </div>
 
       {/* View Responses button */}
-      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <button className="btn btn-outline" onClick={() => setShowAccessModal(true)} style={{ fontSize: '.85rem' }}>
-          🔒 {t.rsvp.viewResponses}
-        </button>
-      </div>
+      {!showViewer && (
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+          <button className="btn btn-outline" onClick={() => {
+            if (isGroomBride) { setShowViewer(true); } else { setShowAccessModal(true); }
+          }} style={{ fontSize: '.85rem' }}>
+            🔒 {t.rsvp.viewResponses}
+          </button>
+        </div>
+      )}
 
       {showAccessModal && (
         <AccessCodeModal
-          onSuccess={() => { setShowAccessModal(false); setShowViewer(true); }}
+          onSuccess={(r) => { setAccessTier(r); setShowAccessModal(false); setShowViewer(true); }}
           onCancel={() => setShowAccessModal(false)}
         />
       )}
