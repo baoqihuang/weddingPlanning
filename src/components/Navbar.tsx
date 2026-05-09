@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useLang } from '../context/LanguageContext';
 import { useRole } from '../context/RoleContext';
+import { useAccess } from '../context/AccessContext';
 
 export function Navbar() {
   const { t, lang, toggleLang } = useLang();
-  const { isCrew } = useRole();
+  const { isCrew, setRole } = useRole();
+  const { clearAccess } = useAccess();
   const navigate = useNavigate();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -60,12 +62,18 @@ export function Navbar() {
           <button className="btn btn-sm btn-outline" onClick={toggleLang}>
             {t.nav.langToggle}
           </button>
+          <button className="btn btn-sm btn-outline" onClick={() => { clearAccess(); setRole(null); }} title={isCrew ? 'Switch to Guest' : 'Switch to Crew'}>
+            {isCrew ? '👤' : '💍'}
+          </button>
         </div>
 
         {/* Mobile hamburger */}
         <div className="nav-mobile" style={styles.mobileControls}>
           <button className="btn btn-sm btn-outline" onClick={toggleLang}>
             {t.nav.langToggle}
+          </button>
+          <button className="btn btn-sm btn-outline" onClick={() => { clearAccess(); setRole(null); }}>
+            {isCrew ? '👤' : '💍'}
           </button>
           <button style={styles.hamburger} onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? '✕' : '☰'}
