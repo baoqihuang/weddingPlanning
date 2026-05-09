@@ -1,0 +1,18 @@
+{
+  "name": "wedding-api",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "func start"
+  },
+  "dependencies": {
+    "@azure/cosmos": "^4.0.0",
+    "@azure/functions": "^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "~5.6.0",
+    "@types/node": "^20.0.0"
+  }
+}
