@@ -3,7 +3,7 @@ import { useLang } from '../context/LanguageContext';
 import { useAccess } from '../context/AccessContext';
 import { useCloudStorage } from '../hooks/useCloudStorage';
 import { AccessCodeModal } from './AccessCodeModal';
-import { defaultChecklistItems, checklistCategories, type ChecklistItem } from '../data/checklistDefaults';
+import { defaultChecklistItems, checklistCategories, weddingPartyMembers, type ChecklistItem } from '../data/checklistDefaults';
 
 export function Checklist() {
   const { t } = useLang();
@@ -12,6 +12,7 @@ export function Checklist() {
   const [items, setItems] = useCloudStorage<ChecklistItem[]>('checklist', 'wedding-checklist', defaultChecklistItems);
   const [filterCat, setFilterCat] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [filterAssignee, setFilterAssignee] = useState<string>('all');
   const [showAddForm, setShowAddForm] = useState(false);
   const [newTask, setNewTask] = useState<Partial<ChecklistItem>>({
     task: '',
@@ -27,9 +28,10 @@ export function Checklist() {
     return items.filter((item) => {
       if (filterCat !== 'all' && item.category !== filterCat) return false;
       if (filterStatus !== 'all' && item.status !== filterStatus) return false;
+      if (filterAssignee !== 'all' && item.assignee !== filterAssignee) return false;
       return true;
     });
-  }, [items, filterCat, filterStatus]);
+  }, [items, filterCat, filterStatus, filterAssignee]);
 
   const stats = useMemo(() => ({
     total: items.length,
@@ -105,6 +107,12 @@ export function Checklist() {
           <option value="inProgress">{t.checklist.status.inProgress}</option>
           <option value="done">{t.checklist.status.done}</option>
         </select>
+        <select value={filterAssignee} onChange={(e) => setFilterAssignee(e.target.value)} style={{ maxWidth: '200px' }}>
+          <option value="all">{t.checklist.assignee || 'Assignee'}</option>
+          {[...weddingPartyMembers, 'All Bridesmaids', 'All Groomsmen'].map((m) => (
+            <option key={m} value={m}>{m}</option>
+          ))}
+        </select>
         {!readOnly && (
           <button className="btn btn-primary btn-sm" onClick={() => setShowAddForm(!showAddForm)}>
             {showAddForm ? t.checklist.cancel : t.checklist.addTask}
@@ -132,7 +140,12 @@ export function Checklist() {
             </div>
             <div className="form-group">
               <label>{t.checklist.assignee}</label>
-              <input value={newTask.assignee} onChange={(e) => setNewTask({ ...newTask, assignee: e.target.value })} />
+              <select value={newTask.assignee} onChange={(e) => setNewTask({ ...newTask, assignee: e.target.value })}>
+                <option value="">—</option>
+                {[...weddingPartyMembers, 'All Bridesmaids', 'All Groomsmen'].map((m) => (
+                  <option key={m} value={m}>{m}</option>
+                ))}
+              </select>
             </div>
           </div>
           <button className="btn btn-primary btn-sm" onClick={addTask}>{t.checklist.save}</button>

@@ -24,7 +24,6 @@ export function Navbar() {
     { path: '/checklist', label: t.nav.checklist },
     { path: '/rsvp', label: t.nav.rsvp },
     { path: '/guests', label: t.nav.guests },
-    { path: '/responsibilities', label: lang === 'en' ? 'Roles' : '分工表' },
     { path: '/schedule', label: lang === 'en' ? 'Schedule' : '日程' },
     { path: '/travel', label: t.nav.travelGuide },
     { path: '/faq', label: 'FAQ' },
