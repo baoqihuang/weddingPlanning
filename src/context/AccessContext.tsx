@@ -9,6 +9,8 @@ interface AccessContextType {
   isGroomBride: boolean;
   /** True if user has any crew-level access (516100 or 2616) */
   hasCrewAccess: boolean;
+  /** Clear access tier (used when switching roles) */
+  clearAccess: () => void;
 }
 
 const AccessContext = createContext<AccessContextType | null>(null);
@@ -28,12 +30,18 @@ export function AccessProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const clearAccess = () => {
+    setAccessTier(null);
+    localStorage.removeItem('wedding-access-tier');
+  };
+
   return (
     <AccessContext.Provider value={{
       accessTier,
       setAccessTier: updateTier,
       isGroomBride: accessTier === 'groomBride',
       hasCrewAccess: accessTier === 'groomBride' || accessTier === 'groomsmenBridesmaid',
+      clearAccess,
     }}>
       {children}
     </AccessContext.Provider>

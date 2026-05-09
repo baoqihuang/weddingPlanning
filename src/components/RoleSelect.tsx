@@ -1,17 +1,24 @@
 import { useState } from 'react';
 import { useRole } from '../context/RoleContext';
+import { useAccess } from '../context/AccessContext';
 import { PugMascot, PoodleMascot } from './DogMascots';
 
 export function RoleSelect() {
   const { setRole } = useRole();
+  const { clearAccess } = useAccess();
   const [showCode, setShowCode] = useState(false);
   const [code, setCode] = useState('');
   const [error, setError] = useState(false);
 
+  const selectRole = (r: 'guest' | 'crew') => {
+    clearAccess();
+    setRole(r);
+  };
+
   const handleCrewSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (code === '2616') {
-      setRole('crew');
+      selectRole('crew');
     } else {
       setError(true);
     }
@@ -31,7 +38,7 @@ export function RoleSelect() {
           How would you like to continue?
         </p>
 
-        <button style={styles.guestBtn} onClick={() => setRole('guest')}>
+        <button style={styles.guestBtn} onClick={() => selectRole('guest')}>
           <span style={styles.btnIcon}>💌</span>
           <span style={styles.btnLabel}>
             I'm a Guest
