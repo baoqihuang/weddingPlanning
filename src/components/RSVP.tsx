@@ -16,6 +16,7 @@ interface RSVPEntry {
   bringingKids: boolean;
   numKids: number;
   submittedAt: string;
+  roomAssignment?: string;
 }
 
 export function RSVP() {
@@ -46,12 +47,15 @@ export function RSVP() {
 
   const stats = useMemo(() => {
     const attending = entries.filter((e) => e.attending);
+    const totalAdults = attending.reduce((s, e) => s + e.numAdults, 0);
+    const totalKids = attending.reduce((s, e) => s + e.numKids, 0);
     return {
-      total: entries.length,
+      responses: entries.length,
       attending: attending.length,
       declined: entries.filter((e) => !e.attending).length,
-      totalAdults: attending.reduce((s, e) => s + e.numAdults, 0),
-      totalKids: attending.reduce((s, e) => s + e.numKids, 0),
+      totalAdults,
+      totalKids,
+      totalGuests: totalAdults + totalKids,
       needHotel: attending.filter((e) => e.needHotel).length,
     };
   }, [entries]);
@@ -106,7 +110,8 @@ export function RSVP() {
 
         <div style={statGridStyle}>
           {[
-            { num: stats.total, label: t.rsvp.totalGuests, color: 'var(--color-primary-dark)' },
+            { num: stats.totalGuests, label: t.rsvp.totalGuests, color: 'var(--color-primary-dark)' },
+            { num: stats.responses, label: lang === 'en' ? 'RSVPs' : '回覆數', color: 'var(--color-primary-dark)' },
             { num: stats.attending, label: t.rsvp.attending_label, color: '#2e7d32' },
             { num: stats.declined, label: t.rsvp.declined, color: '#c62828' },
             { num: stats.totalAdults, label: t.rsvp.totalAdults, color: 'var(--color-primary-dark)' },
@@ -131,6 +136,7 @@ export function RSVP() {
                 <th style={thStyle}>{t.rsvp.needHotel}</th>
                 <th style={thStyle}>{t.rsvp.dietaryRestrictions}</th>
                 <th style={thStyle}>{t.rsvp.notes}</th>
+                <th style={thStyle}>{lang === 'en' ? 'Room Assignment' : '房間安排'}</th>
               </tr>
             </thead>
             <tbody>
@@ -143,6 +149,18 @@ export function RSVP() {
                   <td style={tdStyle}>{entry.needHotel ? '✓' : '—'}</td>
                   <td style={tdStyle}>{entry.dietary || '—'}</td>
                   <td style={tdStyle}>{entry.message || '—'}</td>
+                  <td style={tdStyle}>
+                    <input
+                      type="text"
+                      value={entry.roomAssignment || ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setEntries((prev) => prev.map((en) => en.id === entry.id ? { ...en, roomAssignment: val } : en));
+                      }}
+                      placeholder={lang === 'en' ? 'e.g. Suite 201' : '如：套房201'}
+                      style={{ fontSize: '0.8rem', padding: '4px 8px', minWidth: '120px', border: '1px solid var(--color-primary-light)', borderRadius: '6px' }}
+                    />
+                  </td>
                 </tr>
               ))}
             </tbody>
