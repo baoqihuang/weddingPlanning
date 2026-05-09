@@ -14,6 +14,7 @@ import { Guests } from './components/Guests';
 import { TravelGuide } from './components/TravelGuide';
 import { FAQ } from './components/FAQ';
 import { Schedule } from './components/Schedule';
+import { Responsibilities } from './components/Responsibilities';
 
 function AppInner() {
   const [showSplash, setShowSplash] = useState(true);
@@ -39,6 +40,7 @@ function AppInner() {
         <Route path="/budget" element={<Budget />} />
         <Route path="/checklist" element={<Checklist />} />
         <Route path="/guests" element={<Guests />} />
+        <Route path="/responsibilities" element={<Responsibilities />} />
       </Routes>
     </HashRouter>
   );
