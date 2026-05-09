@@ -25,12 +25,15 @@ export function Checklist() {
   const readOnly = accessTier === 'groomsmenBridesmaid';
 
   const filteredItems = useMemo(() => {
-    return items.filter((item) => {
-      if (filterCat !== 'all' && item.category !== filterCat) return false;
-      if (filterStatus !== 'all' && item.status !== filterStatus) return false;
-      if (filterAssignee !== 'all' && item.assignee !== filterAssignee) return false;
-      return true;
-    });
+    const statusOrder: Record<string, number> = { inProgress: 0, notStarted: 1, done: 2 };
+    return items
+      .filter((item) => {
+        if (filterCat !== 'all' && item.category !== filterCat) return false;
+        if (filterStatus !== 'all' && item.status !== filterStatus) return false;
+        if (filterAssignee !== 'all' && item.assignee !== filterAssignee) return false;
+        return true;
+      })
+      .sort((a, b) => (statusOrder[a.status] ?? 1) - (statusOrder[b.status] ?? 1));
   }, [items, filterCat, filterStatus, filterAssignee]);
 
   const stats = useMemo(() => ({
@@ -169,8 +172,22 @@ export function Checklist() {
                 {item.task}
               </span>
               <span style={styles.itemMeta}>
-                {item.category} {item.dueDate && `· ${item.dueDate}`} {item.assignee && `· ${item.assignee}`}
+                {item.category} {item.dueDate && `· ${item.dueDate}`}
               </span>
+              {!readOnly ? (
+                <select
+                  value={item.assignee || ''}
+                  onChange={(e) => updateItem(item.id, { assignee: e.target.value })}
+                  style={styles.assigneeSelect}
+                >
+                  <option value="">{lang === 'en' ? '— Unassigned —' : '— 未分配 —'}</option>
+                  {[...weddingPartyMembers, 'All Bridesmaids', 'All Groomsmen'].map((m) => (
+                    <option key={m} value={m}>{m}</option>
+                  ))}
+                </select>
+              ) : item.assignee ? (
+                <span style={styles.assigneeText}>👤 {item.assignee}</span>
+              ) : null}
               {!readOnly ? (
                 <input
                   type="text"
@@ -290,6 +307,22 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: '0.8rem',
     color: 'var(--color-text-muted)',
     fontStyle: 'italic',
+  },
+  assigneeSelect: {
+    marginTop: '4px',
+    padding: '3px 6px',
+    fontSize: '0.78rem',
+    border: '1px solid var(--color-primary-light)',
+    borderRadius: '6px',
+    color: 'var(--color-text)',
+    background: 'white',
+    width: 'fit-content',
+    maxWidth: '100%',
+  },
+  assigneeText: {
+    marginTop: '4px',
+    fontSize: '0.8rem',
+    color: 'var(--color-primary-dark)',
   },
   itemRight: {
     display: 'flex',
