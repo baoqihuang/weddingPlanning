@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useLang } from '../context/LanguageContext';
 import { useAccess } from '../context/AccessContext';
+import { useRole } from '../context/RoleContext';
 import { useCloudStorage } from '../hooks/useCloudStorage';
 import { AccessCodeModal } from './AccessCodeModal';
 
@@ -33,7 +34,8 @@ export function RSVP() {
   const [numKids, setNumKids] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const { isGroomBride, setAccessTier } = useAccess();
-  const [showViewer, setShowViewer] = useState(isGroomBride);
+  const { isCrew } = useRole();
+  const [showViewer, setShowViewer] = useState(isGroomBride && isCrew);
   const [showAccessModal, setShowAccessModal] = useState(false);
 
   // Check if name matches existing guest entry
@@ -192,8 +194,8 @@ export function RSVP() {
         <p className="rsvp-loc">Shicheng Forest Hot Spring Resort · 石城森林溫泉度假酒店</p>
       </div>
 
-      {/* View Responses button */}
-      {!showViewer && (
+      {/* View Responses button — crew only */}
+      {isCrew && !showViewer && (
         <div style={{ textAlign: 'center', marginBottom: '20px' }}>
           <button className="btn btn-outline" onClick={() => {
             if (isGroomBride) { setShowViewer(true); } else { setShowAccessModal(true); }

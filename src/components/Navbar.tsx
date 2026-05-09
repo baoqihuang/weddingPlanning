@@ -15,7 +15,7 @@ export function Navbar() {
     { path: '/rsvp', label: t.nav.rsvp },
     { path: '/schedule', label: lang === 'en' ? 'Schedule' : '日程' },
     { path: '/travel', label: t.nav.travelGuide },
-    { path: '/faq', label: 'FAQ' },
+    { path: '/faq', label: 'Q+A' },
   ];
 
   const crewLinks = [
@@ -26,7 +26,7 @@ export function Navbar() {
     { path: '/guests', label: t.nav.guests },
     { path: '/schedule', label: lang === 'en' ? 'Schedule' : '日程' },
     { path: '/travel', label: t.nav.travelGuide },
-    { path: '/faq', label: 'FAQ' },
+    { path: '/faq', label: 'Q+A' },
   ];
 
   const links = isCrew ? crewLinks : guestLinks;
