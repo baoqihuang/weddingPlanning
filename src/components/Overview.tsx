@@ -210,8 +210,8 @@ export function Overview() {
           <div style={styles.inviteInner} onClick={(e) => e.stopPropagation()}>
             <button style={styles.inviteClose} onClick={() => setShowInvite(false)}>✕</button>
             <div style={styles.inviteImgWrap}>
-              <img src="/images/invitationLetter1.JPG" alt="Invitation 1" style={{ width: '100%', display: 'block' }} />
-              <img src="/images/invitationLetter2.JPG" alt="Invitation 2" style={{ width: '100%', display: 'block' }} />
+              <img src="/images/invitationLetter1.JPG" alt="Invitation 1" style={{ width: '50%', display: 'block', objectFit: 'contain' }} />
+              <img src="/images/invitationLetter2.JPG" alt="Invitation 2" style={{ width: '50%', display: 'block', objectFit: 'contain' }} />
             </div>
           </div>
         </div>
@@ -395,7 +395,7 @@ const styles: Record<string, React.CSSProperties> = {
   inviteInner: {
     background: '#fff',
     borderRadius: '18px',
-    maxWidth: '460px',
+    maxWidth: '960px',
     width: '100%',
     boxShadow: '0 24px 80px rgba(110,71,171,.45)',
     overflow: 'hidden',
@@ -424,7 +424,9 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 700,
   },
   inviteImgWrap: {
-    overflowY: 'auto',
+    display: 'flex',
+    gap: '0',
     flex: 1,
+    overflow: 'hidden',
   },
 };
