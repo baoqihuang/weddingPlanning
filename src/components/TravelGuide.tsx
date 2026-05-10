@@ -18,18 +18,15 @@ function CollapsibleCard({ title, children, defaultOpen = false }: { title: stri
 
 export function TravelGuide() {
   const { lang } = useLang();
-  const [route, setRoute] = useState<'us' | 'hk'>('us');
   const { isGroomBride, setAccessTier } = useAccess();
   const [showTripModal, setShowTripModal] = useState(false);
 
   return lang === 'zh-TW'
-    ? <TravelZH route={route} setRoute={setRoute} tripUnlocked={isGroomBride} onUnlockTrip={() => { if (isGroomBride) return; setShowTripModal(true); }} showTripModal={showTripModal} onTripModalSuccess={(r) => { setAccessTier(r); setShowTripModal(false); }} onTripModalCancel={() => setShowTripModal(false)} />
-    : <TravelEN route={route} setRoute={setRoute} tripUnlocked={isGroomBride} onUnlockTrip={() => { if (isGroomBride) return; setShowTripModal(true); }} showTripModal={showTripModal} onTripModalSuccess={(r) => { setAccessTier(r); setShowTripModal(false); }} onTripModalCancel={() => setShowTripModal(false)} />;
+    ? <TravelZH tripUnlocked={isGroomBride} onUnlockTrip={() => { if (isGroomBride) return; setShowTripModal(true); }} showTripModal={showTripModal} onTripModalSuccess={(r) => { setAccessTier(r); setShowTripModal(false); }} onTripModalCancel={() => setShowTripModal(false)} />
+    : <TravelEN tripUnlocked={isGroomBride} onUnlockTrip={() => { if (isGroomBride) return; setShowTripModal(true); }} showTripModal={showTripModal} onTripModalSuccess={(r) => { setAccessTier(r); setShowTripModal(false); }} onTripModalCancel={() => setShowTripModal(false)} />;
 }
 
 interface RouteProps {
-  route: 'us' | 'hk';
-  setRoute: (r: 'us' | 'hk') => void;
   tripUnlocked: boolean;
   onUnlockTrip: () => void;
   showTripModal: boolean;
@@ -37,7 +34,7 @@ interface RouteProps {
   onTripModalCancel: () => void;
 }
 
-function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, onTripModalSuccess, onTripModalCancel }: RouteProps) {
+function TravelEN({ tripUnlocked, onUnlockTrip, showTripModal, onTripModalSuccess, onTripModalCancel }: RouteProps) {
   return (
     <div className="container section" style={{ paddingTop: '80px' }}>
       <h1 className="section-title">Travel Guide</h1>
@@ -46,13 +43,8 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
         <p style={{ fontSize: '.9rem', color: 'var(--color-text-light)', lineHeight: 1.6, marginBottom: '1rem' }}>
           Our wedding is in <strong>Ganzhou, Jiangxi Province</strong> (贛州, 江西省). Below you'll find step-by-step travel guides for guests flying from the <strong>United States</strong> and guests travelling from <strong>Hong Kong</strong>.
         </p>
-        <div className="route-toggle">
-          <button className={`route-btn${route === 'us' ? ' active' : ''}`} onClick={() => setRoute('us')}>✈️ From the United States</button>
-          <button className={`route-btn${route === 'hk' ? ' active' : ''}`} onClick={() => setRoute('hk')}>🚌 From Hong Kong</button>
-        </div>
 
-        {route === 'us' && (
-          <>
+        <CollapsibleCard title="✈️ From the United States">
             <div className="warn-box">
               <span className="tip-icon">📖</span>
               <div><strong>China Visa Required for US Citizens</strong> — US passport holders must obtain a Chinese tourist visa (L visa) before travelling to mainland China. Apply at your nearest Chinese consulate at least 4–6 weeks in advance. Hong Kong is visa-free for US citizens (90 days).</div>
@@ -127,11 +119,9 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
                 </div>
               </div>
             </div>
-          </>
-        )}
+        </CollapsibleCard>
 
-        {route === 'hk' && (
-          <>
+        <CollapsibleCard title="🚌 From Hong Kong">
             <div className="tip-box">
               <span className="tip-icon">✅</span>
               <div><strong>No Visa Required for HK Permanent Residents & Chinese Citizens</strong> — SAR passport or Home Return Permit (回鄉證) holders can use fast-track eGate lanes at West Kowloon.</div>
@@ -180,8 +170,7 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
                 </div>
               </div>
             </div>
-          </>
-        )}
+        </CollapsibleCard>
       </CollapsibleCard>
 
       {/* Venue */}
@@ -406,7 +395,7 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
   );
 }
 
-function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, onTripModalSuccess, onTripModalCancel }: RouteProps) {
+function TravelZH({ tripUnlocked, onUnlockTrip, showTripModal, onTripModalSuccess, onTripModalCancel }: RouteProps) {
   return (
     <div className="container section" style={{ paddingTop: '80px' }}>
       <h1 className="section-title">交通指南</h1>
@@ -415,13 +404,8 @@ function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
         <p style={{ fontSize: '.9rem', color: 'var(--color-text-light)', lineHeight: 1.6, marginBottom: '1rem' }}>
           我們的婚禮在<strong>江西省贛州市</strong>舉行。以下為來自<strong>美國</strong>及<strong>香港</strong>賓客的詳細交通指南。
         </p>
-        <div className="route-toggle">
-          <button className={`route-btn${route === 'us' ? ' active' : ''}`} onClick={() => setRoute('us')}>✈️ 從美國出發</button>
-          <button className={`route-btn${route === 'hk' ? ' active' : ''}`} onClick={() => setRoute('hk')}>🚌 從香港出發</button>
-        </div>
 
-        {route === 'us' && (
-          <>
+        <CollapsibleCard title="✈️ 從美國出發">
             <div className="warn-box">
               <span className="tip-icon">📖</span>
               <div><strong>美國公民須申請中國簽證</strong> — 持美國護照人士須於出發前申請中國旅遊簽證（L簽）。請提前4至6週向最近的中國領事館申辦。香港方面，美國公民可免簽逗留90天。</div>
@@ -496,11 +480,9 @@ function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
                 </div>
               </div>
             </div>
-          </>
-        )}
+        </CollapsibleCard>
 
-        {route === 'hk' && (
-          <>
+        <CollapsibleCard title="🚌 從香港出發">
             <div className="tip-box">
               <span className="tip-icon">✅</span>
               <div><strong>香港永久居民及中國公民無需簽證</strong> — 持特區護照或回鄉證的人士可在西九龍站使用快速e道通道。</div>
@@ -549,8 +531,7 @@ function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
                 </div>
               </div>
             </div>
-          </>
-        )}
+        </CollapsibleCard>
       </CollapsibleCard>
 
       {/* Venue */}
