@@ -1,5 +1,5 @@
 import { app, type HttpRequest, type HttpResponseInit } from '@azure/functions';
-import { appendToCollection, getCollection, type CollectionDoc } from '../cosmos.js';
+import { appendToCollection, getCollection, type CollectionDoc } from '../cosmos';
 
 interface GuestItem {
   id: string;
@@ -60,7 +60,7 @@ app.http('rsvpSubmit', {
         updatedItems.push(guestEntry);
       }
 
-      const { putCollection } = await import('../cosmos.js');
+      const { putCollection } = await import('../cosmos');
       await putCollection('guests', updatedItems, guestsDoc.version);
     } catch {
       // Guest sync is best-effort; don't fail the RSVP
