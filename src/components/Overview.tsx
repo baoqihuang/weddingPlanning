@@ -44,8 +44,8 @@ export function Overview() {
   }
 
   const dateDisplay = lang === 'en'
-    ? WEDDING_DATE.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-    : WEDDING_DATE.toLocaleDateString('zh-TW', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    ? WEDDING_DATE.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Shanghai' })
+    : WEDDING_DATE.toLocaleDateString('zh-TW', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Shanghai' });
 
   const guestSections = [
     { path: '/rsvp', label: t.nav.rsvp, emoji: '💌' },
