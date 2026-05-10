@@ -106,8 +106,9 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
                 <div className="step-num">5</div>
                 <div className="step-body">
                   <h3>Arrive: Ganzhou West Station (贛州西站)</h3>
-                  <p>Take a taxi or pre-arranged hotel transfer to the venue. <strong>DiDi</strong> (滴滴) is China's Uber equivalent and works well in Ganzhou.</p>
+                  <p>Please <strong>contact the bride (Heilam)</strong> in advance and share your arrival date & time so we can arrange a bus or car from Ganzhou West Station to the wedding hotel.</p>
                   <div className="step-meta">
+                    <span className="meta-chip chip-warn">Let us know your arrival time!</span>
                     <span className="meta-chip chip-tip">Download DiDi before your trip</span>
                     <span className="meta-chip chip-tip">WeChat Pay or cash for taxis</span>
                   </div>
@@ -159,8 +160,9 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
                 <div className="step-num">4</div>
                 <div className="step-body">
                   <h3>Arrive: Ganzhou West Station (贛州西站)</h3>
-                  <p>Taxis, DiDi (滴滴), and hotel shuttles are available at the station.</p>
+                  <p>Please <strong>contact the bride (Heilam)</strong> in advance and share your arrival date & time so we can arrange a bus or car from Ganzhou West Station to the wedding hotel.</p>
                   <div className="step-meta">
+                    <span className="meta-chip chip-warn">Let us know your arrival time!</span>
                     <span className="meta-chip chip-tip">WeChat Pay widely accepted</span>
                   </div>
                 </div>
@@ -479,8 +481,9 @@ function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
                 <div className="step-num">5</div>
                 <div className="step-body">
                   <h3>抵達：贛州西站</h3>
-                  <p>可在站外乘搭計程車或提前安排酒店接送。<strong>滴滴出行</strong>是中國版Uber，在贛州廣泛使用。</p>
+                  <p>請提前<strong>聯繫新娘（希琳）</strong>，告知您的抵達日期和時間，我們會安排巴士或專車從贛州西站接送至婚禮酒店。</p>
                   <div className="step-meta">
+                    <span className="meta-chip chip-warn">請提前告知到達時間！</span>
                     <span className="meta-chip chip-tip">出發前下載滴滴App</span>
                     <span className="meta-chip chip-tip">可使用微信支付或現金</span>
                   </div>
@@ -532,8 +535,9 @@ function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
                 <div className="step-num">4</div>
                 <div className="step-body">
                   <h3>抵達：贛州西站</h3>
-                  <p>站外有計程車、滴滴出行及酒店接送服務。</p>
+                  <p>請提前<strong>聯繫新娘（希琳）</strong>，告知您的抵達日期和時間，我們會安排巴士或專車從贛州西站接送至婚禮酒店。</p>
                   <div className="step-meta">
+                    <span className="meta-chip chip-warn">請提前告知到達時間！</span>
                     <span className="meta-chip chip-tip">微信支付廣泛用於計程車付款</span>
                   </div>
                 </div>
