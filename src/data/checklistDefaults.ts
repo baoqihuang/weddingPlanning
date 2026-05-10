@@ -9,6 +9,9 @@ export interface ChecklistItem {
 }
 
 export const weddingPartyMembers = [
+  // Bride & Groom
+  'Heilam Wu',
+  'Baoqi Huang',
   // Bridesmaids
   'Curly Zhao',
   'Wennie He',
