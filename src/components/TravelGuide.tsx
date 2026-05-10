@@ -562,11 +562,10 @@ function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
           <span className="tip-icon">🏨</span>
           <div>此度假酒店既是我們的<strong>婚禮場地，亦是推薦賓客入住的酒店</strong>。入住於此，婚禮當天無需另行安排交通！</div>
         </div>
-      </div>
+      </CollapsibleCard>
 
       {/* Alipay Setup Guide */}
-      <div className="card">
-        <h2>💳 設定支付寶（適用於美國賓客）</h2>
+      <CollapsibleCard title="💳 設定支付寶（適用於美國賓客）">
         <p style={{ fontSize: '.9rem', color: 'var(--color-text-light)', lineHeight: 1.6, marginBottom: '1rem' }}>
           中國大陸幾乎不使用現金——絕大部分消費都透過<strong>手機QR碼支付</strong>。強烈建議在出發前設定好<strong>支付寶（Alipay）</strong>。
         </p>
@@ -626,11 +625,10 @@ function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
             • Tour Pass <strong>不可提取現金</strong>——如需現金，請攜帶銀行卡在ATM提款。
           </div>
         </div>
-      </div>
+      </CollapsibleCard>
 
       {/* Essential Tips */}
-      <div className="card">
-        <h2>所有賓客注意事項</h2>
+      <CollapsibleCard title="所有賓客注意事項">
         <div className="essentials-grid">
           {[
             { icon: '💳', title: '貨幣及支付', body: '中國大陸使用人民幣（CNY/¥）。微信支付及支付寶是主要付款方式。請參閱上方的支付寶設定指南。' },
@@ -648,11 +646,10 @@ function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
             </div>
           ))}
         </div>
-      </div>
+      </CollapsibleCard>
 
       {/* Explore Ganzhou */}
-      <div className="card">
-        <h2>探索江西</h2>
+      <CollapsibleCard title="探索江西">
         <p style={{ fontSize: '.85rem', color: 'var(--color-text-light)', marginBottom: '1rem' }}>
           趁婚禮之行，好好感受江西的歷史、自然風光與文化！
         </p>
@@ -673,7 +670,7 @@ function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
             </div>
           ))}
         </div>
-      </div>
+      </CollapsibleCard>
 
       {/* Post-Wedding Trip — groom/bride only */}
       {!tripUnlocked ? (
@@ -684,8 +681,7 @@ function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
           {showTripModal && <AccessCodeModal onSuccess={onTripModalSuccess} onCancel={onTripModalCancel} />}
         </div>
       ) : (
-      <div className="card">
-        <h2>🧳 婚後旅行計劃</h2>
+      <CollapsibleCard title="🧳 婚後旅行計劃">
         <p style={{ fontSize: '.85rem', color: 'var(--color-text-light)', marginBottom: '1rem' }}>
           婚禮過後，我們將遊歷中國各地！歡迎賓客加入旅程的任何部分。
         </p>
@@ -699,7 +695,7 @@ function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
           <div className="step"><div className="step-num">7</div><div className="step-body"><h3>📍 香港</h3><p>回程前最後一站——飲茶、太平山及最後採購。</p><div className="step-meta"><span className="meta-chip chip-time">11月19日 · 1天</span><span className="meta-chip chip-warn">✈️ 從成都飛往</span></div></div></div>
           <div className="step"><div className="step-num">✈️</div><div className="step-body"><h3>香港 → 三藩市</h3><p>回家！</p><div className="step-meta"><span className="meta-chip chip-time">11月20日</span></div></div></div>
         </div>
-      </div>
+      </CollapsibleCard>
       )}
     </div>
   );
