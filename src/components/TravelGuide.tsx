@@ -1,7 +1,20 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useLang } from '../context/LanguageContext';
 import { useAccess } from '../context/AccessContext';
 import { AccessCodeModal } from './AccessCodeModal';
+
+function CollapsibleCard({ title, children, defaultOpen = false }: { title: string; children: ReactNode; defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="card" style={{ cursor: 'pointer' }} onClick={() => !open && setOpen(true)}>
+      <h2 onClick={() => setOpen(!open)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: 0, cursor: 'pointer', userSelect: 'none' }}>
+        <span>{title}</span>
+        <span style={{ fontSize: '1.2rem', transition: 'transform 0.3s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}>▼</span>
+      </h2>
+      {open && <div style={{ marginTop: '1rem' }}>{children}</div>}
+    </div>
+  );
+}
 
 export function TravelGuide() {
   const { lang } = useLang();
@@ -29,8 +42,7 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
     <div className="container section" style={{ paddingTop: '80px' }}>
       <h1 className="section-title">Travel Guide</h1>
 
-      <div className="card">
-        <h2>Getting to Jiangxi Province, China</h2>
+      <CollapsibleCard title="Getting to Jiangxi Province, China" defaultOpen>
         <p style={{ fontSize: '.9rem', color: 'var(--color-text-light)', lineHeight: 1.6, marginBottom: '1rem' }}>
           Our wedding is in <strong>Ganzhou, Jiangxi Province</strong> (贛州, 江西省). Below you'll find step-by-step travel guides for guests flying from the <strong>United States</strong> and guests travelling from <strong>Hong Kong</strong>.
         </p>
@@ -170,11 +182,10 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
             </div>
           </>
         )}
-      </div>
+      </CollapsibleCard>
 
       {/* Venue */}
-      <div className="card">
-        <h2>🏨 Wedding Venue & Hotel</h2>
+      <CollapsibleCard title="🏨 Wedding Venue & Hotel">
         <h3 style={{ fontSize: '1.1rem', color: 'var(--color-primary-dark)', marginBottom: '.15rem' }}>石城森林温泉度假酒店</h3>
         <p className="venue-en-name">Shicheng Forest Hot Spring Resort</p>
         <p className="venue-address">📍 No. 8, Fuhu Road, Binjiang Road, Ganjiāngyuán North Avenue, Shicheng County, Ganzhou, Jiangxi</p>
@@ -182,11 +193,10 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
           <span className="tip-icon">🏨</span>
           <div>This resort is both our <strong>wedding venue and the recommended hotel</strong> for guests. Staying here means you're right at the celebration — no extra transport needed on the big day!</div>
         </div>
-      </div>
+      </CollapsibleCard>
 
       {/* Alipay Setup Guide */}
-      <div className="card">
-        <h2>💳 Setting Up Alipay (For US Guests)</h2>
+      <CollapsibleCard title="💳 Setting Up Alipay (For US Guests)">
         <p style={{ fontSize: '.9rem', color: 'var(--color-text-light)', lineHeight: 1.6, marginBottom: '1rem' }}>
           Cash is rarely used in mainland China — almost everything is paid via <strong>mobile QR codes</strong>. Setting up <strong>Alipay</strong> before your trip is highly recommended.
         </p>
@@ -246,11 +256,10 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
             • You <strong>cannot withdraw cash</strong> from Tour Pass — bring your debit card for ATM withdrawals if you need cash.
           </div>
         </div>
-      </div>
+      </CollapsibleCard>
 
       {/* Essential Tips */}
-      <div className="card">
-        <h2>Essential Tips for All Guests</h2>
+      <CollapsibleCard title="Essential Tips for All Guests">
         <div className="essentials-grid">
           {[
             { icon: '💳', title: 'Currency & Payments', body: 'China uses CNY / RMB (¥). WeChat Pay and Alipay are the dominant payment methods. See the Alipay setup guide above to get started.' },
@@ -268,11 +277,10 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
             </div>
           ))}
         </div>
-      </div>
+      </CollapsibleCard>
 
       {/* Explore Ganzhou & Jiangxi */}
-      <div className="card">
-        <h2>Explore Jiangxi</h2>
+      <CollapsibleCard title="Explore Jiangxi">
         <p style={{ fontSize: '.85rem', color: 'var(--color-text-light)', marginBottom: '1rem' }}>
           Make the most of your visit — Jiangxi is full of history, natural beauty, and culture!
         </p>
@@ -293,7 +301,7 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
             </div>
           ))}
         </div>
-      </div>
+      </CollapsibleCard>
 
       {/* Post-Wedding Trip — groom/bride only */}
       {!tripUnlocked ? (
@@ -304,8 +312,7 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
           {showTripModal && <AccessCodeModal onSuccess={onTripModalSuccess} onCancel={onTripModalCancel} />}
         </div>
       ) : (
-      <div className="card">
-        <h2>🧳 Our Post-Wedding Trip</h2>
+      <CollapsibleCard title="🧳 Our Post-Wedding Trip">
         <p style={{ fontSize: '.85rem', color: 'var(--color-text-light)', marginBottom: '1rem' }}>
           After the wedding, we'll be traveling across China! Guests are welcome to join us for any part of the journey.
         </p>
@@ -393,7 +400,7 @@ function TravelEN({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
             </div>
           </div>
         </div>
-      </div>
+      </CollapsibleCard>
       )}
     </div>
   );
@@ -404,8 +411,7 @@ function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
     <div className="container section" style={{ paddingTop: '80px' }}>
       <h1 className="section-title">交通指南</h1>
 
-      <div className="card">
-        <h2>前往中國江西省</h2>
+      <CollapsibleCard title="前往中國江西省" defaultOpen>
         <p style={{ fontSize: '.9rem', color: 'var(--color-text-light)', lineHeight: 1.6, marginBottom: '1rem' }}>
           我們的婚禮在<strong>江西省贛州市</strong>舉行。以下為來自<strong>美國</strong>及<strong>香港</strong>賓客的詳細交通指南。
         </p>
@@ -545,11 +551,10 @@ function TravelZH({ route, setRoute, tripUnlocked, onUnlockTrip, showTripModal, 
             </div>
           </>
         )}
-      </div>
+      </CollapsibleCard>
 
       {/* Venue */}
-      <div className="card">
-        <h2>🏨 婚禮場地及酒店</h2>
+      <CollapsibleCard title="🏨 婚禮場地及酒店">
         <h3 style={{ fontSize: '1.1rem', color: 'var(--color-primary-dark)', marginBottom: '.15rem' }}>石城森林溫泉度假酒店</h3>
         <p className="venue-en-name">Shicheng Forest Hot Spring Resort</p>
         <p className="venue-address">📍 江西省贛州市石城縣贛江源北大道濱江路福湖路8號</p>

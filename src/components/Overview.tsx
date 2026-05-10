@@ -51,7 +51,7 @@ export function Overview() {
     { path: '/rsvp', label: t.nav.rsvp, emoji: '💌' },
     { path: '/schedule', label: lang === 'en' ? 'Schedule' : '日程', emoji: '📋' },
     { path: '/travel', label: t.nav.travelGuide, emoji: '✈️' },
-    { path: '/faq', label: 'FAQ', emoji: '❓' },
+    { path: '/faq', label: 'Q+A', emoji: '❓' },
   ];
 
   const crewSections = [
@@ -61,7 +61,7 @@ export function Overview() {
     { path: '/guests', label: t.nav.guests, emoji: '👥' },
     { path: '/schedule', label: lang === 'en' ? 'Schedule' : '日程', emoji: '📋' },
     { path: '/travel', label: t.nav.travelGuide, emoji: '✈️' },
-    { path: '/faq', label: 'FAQ', emoji: '❓' },
+    { path: '/faq', label: 'Q+A', emoji: '❓' },
   ];
 
   const sections = isCrew ? crewSections : guestSections;

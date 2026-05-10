@@ -26,7 +26,7 @@ export function FAQ() {
 
   return (
     <div className="container section" style={{ paddingTop: '80px' }}>
-      <h1 className="section-title">{lang === 'en' ? 'FAQ' : '常見問題'}</h1>
+      <h1 className="section-title">{lang === 'en' ? 'Q+A' : '常見問題'}</h1>
       <DogDivider />
       {faqs.map((faq, i) => (
         <div key={i} className="card" style={{ marginBottom: '12px' }}>
