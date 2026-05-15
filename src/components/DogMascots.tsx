@@ -14,7 +14,7 @@ export function PoodleMascot({ size = 48, style }: { size?: number; style?: Reac
   return (
     <img
       src="/images/pug2.png"
-      alt="Poodle mascot"
+      alt="Pug mascot 2"
       width={size}
       height={size}
       style={{ objectFit: 'contain', mixBlendMode: 'multiply', ...style }}

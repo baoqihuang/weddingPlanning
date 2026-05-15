@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLang } from '../context/LanguageContext';
 import { PugMascot, PoodleMascot } from './DogMascots';
 
 interface SplashProps {
@@ -6,6 +7,7 @@ interface SplashProps {
 }
 
 export function Splash({ onEnter }: SplashProps) {
+  const { t } = useLang();
   const [imageLoaded, setImageLoaded] = useState([false, false]);
 
   const handleLoad = (idx: number) => {
@@ -47,7 +49,7 @@ export function Splash({ onEnter }: SplashProps) {
         style={styles.enterBtn}
         onClick={onEnter}
       >
-        Enter
+        {t.splash.enter}
       </button>
     </div>
   );

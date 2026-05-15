@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useRole } from '../context/RoleContext';
 import { useAccess } from '../context/AccessContext';
+import { useLang } from '../context/LanguageContext';
 import { PugMascot, PoodleMascot } from './DogMascots';
 
 export function RoleSelect() {
   const { setRole } = useRole();
   const { clearAccess } = useAccess();
+  const { t } = useLang();
   const [showCode, setShowCode] = useState(false);
   const [code, setCode] = useState('');
   const [error, setError] = useState(false);
@@ -32,29 +34,29 @@ export function RoleSelect() {
           <PoodleMascot size={64} />
         </div>
         <h2 style={styles.title}>
-          Welcome!
+          {t.roleSelect.welcome}
         </h2>
         <p style={styles.subtitle}>
-          How would you like to continue?
+          {t.roleSelect.subtitle}
         </p>
 
         <button style={styles.guestBtn} onClick={() => selectRole('guest')}>
           <span style={styles.btnIcon}>💌</span>
           <span style={styles.btnLabel}>
-            I'm a Guest
+            {t.roleSelect.guest}
           </span>
           <span style={styles.btnHint}>
-            RSVP, travel info & more
+            {t.roleSelect.guestHint}
           </span>
         </button>
 
         <button style={styles.crewBtn} onClick={() => setShowCode(true)}>
           <span style={styles.btnIcon}>💍</span>
           <span style={styles.btnLabel}>
-            Wedding Crew
+            {t.roleSelect.crew}
           </span>
           <span style={styles.btnHint}>
-            Budget, checklist & planning
+            {t.roleSelect.crewHint}
           </span>
         </button>
 
@@ -64,17 +66,17 @@ export function RoleSelect() {
               type="password"
               value={code}
               onChange={(e) => { setCode(e.target.value); setError(false); }}
-              placeholder="Enter crew code"
+              placeholder={t.roleSelect.codePlaceholder}
               style={styles.codeInput}
               autoFocus
             />
             {error && (
               <p style={styles.error}>
-                Incorrect code. Please try again.
+                {t.roleSelect.codeError}
               </p>
             )}
             <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
-              Enter
+              {t.roleSelect.enter}
             </button>
           </form>
         )}

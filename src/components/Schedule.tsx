@@ -2,7 +2,7 @@ import { useLang } from '../context/LanguageContext';
 import { PugMascot, PoodleMascot } from './DogMascots';
 
 export function Schedule() {
-  const { lang } = useLang();
+  const { t, lang } = useLang();
 
   const events = lang === 'en' ? [
     { time: '10:00 AM', title: 'Guest Arrival & Welcome', desc: 'Check in at the resort, freshen up, and enjoy the hot spring facilities.', icon: '🏨' },
@@ -24,9 +24,9 @@ export function Schedule() {
 
   return (
     <div className="container section" style={{ paddingTop: '80px' }}>
-      <h1 className="section-title">{lang === 'en' ? 'Wedding Day Schedule' : '婚禮日程'}</h1>
+      <h1 className="section-title">{t.schedule.title}</h1>
       <p style={{ textAlign: 'center', color: 'var(--color-text-light)', marginBottom: '8px', fontSize: '.95rem' }}>
-        {lang === 'en' ? 'November 1, 2026' : '2026年11月1日'}
+        {t.schedule.date}
       </p>
 
       <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginBottom: '32px' }}>

@@ -60,7 +60,8 @@ export function useCloudStorage<T>(
     }
   });
 
-  const [version, setVersion] = useState(0);
+  const [, setVersion] = useState(0);
+  const versionRef = useRef(0);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -84,6 +85,7 @@ export function useCloudStorage<T>(
           // Cloud has data — use it as source of truth
           setData(cloudItems);
           setVersion(cloud.version);
+          versionRef.current = cloud.version;
           try {
             window.localStorage.setItem(localStorageKey, JSON.stringify(cloudItems));
           } catch { /* ignore */ }
@@ -92,6 +94,7 @@ export function useCloudStorage<T>(
           const result = await saveCloud<T>(collection, localData, 0);
           if (result.success && result.data) {
             setVersion(result.data.version);
+            versionRef.current = result.data.version;
           }
         }
         hydrated.current = true;
@@ -112,10 +115,12 @@ export function useCloudStorage<T>(
         const result = await saveCloud<T>(collection, newData, currentVersion);
         if (result.success && result.data) {
           setVersion(result.data.version);
+          versionRef.current = result.data.version;
         } else if (result.conflict && result.data) {
           // Conflict: reload cloud data
           setData(result.data.items);
           setVersion(result.data.version);
+          versionRef.current = result.data.version;
           try {
             window.localStorage.setItem(localStorageKey, JSON.stringify(result.data.items));
           } catch { /* ignore */ }
@@ -135,14 +140,14 @@ export function useCloudStorage<T>(
         try {
           window.localStorage.setItem(localStorageKey, JSON.stringify(newValue));
         } catch { /* ignore */ }
-        // Save to cloud (debounced) only if hydrated
+        // Save to cloud (debounced) only if hydrated — use ref to avoid stale version
         if (hydrated.current) {
-          saveToCloud(newValue, version);
+          saveToCloud(newValue, versionRef.current);
         }
         return newValue;
       });
     },
-    [localStorageKey, saveToCloud, version]
+    [localStorageKey, saveToCloud]
   );
 
   return [data, setValue, { loading, syncing, error }];

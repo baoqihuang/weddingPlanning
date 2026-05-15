@@ -1,7 +1,7 @@
 import { useLang } from '../context/LanguageContext';
 
 export function Responsibilities() {
-  const { lang } = useLang();
+  const { t, lang } = useLang();
 
   const sections = [
     {
@@ -38,11 +38,9 @@ export function Responsibilities() {
 
   return (
     <div className="container section" style={{ paddingTop: '80px' }}>
-      <h1 className="section-title">{isZH ? '伴郎伴娘分工表' : 'Wedding Party Responsibilities'}</h1>
+      <h1 className="section-title">{t.responsibilities.title}</h1>
       <p style={{ textAlign: 'center', fontSize: '.9rem', color: 'var(--color-text-light)', marginBottom: '2rem', lineHeight: 1.6 }}>
-        {isZH
-          ? '提前整理好伴郎伴娘的分工明細，把事情落實到個人，婚禮當天井然有序！'
-          : 'A clear breakdown of roles for bridesmaids and groomsmen so everything runs smoothly on the big day!'}
+        {t.responsibilities.subtitle}
       </p>
 
       {sections.map((s, i) => (

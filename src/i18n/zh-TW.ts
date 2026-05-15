@@ -9,6 +9,8 @@ export const zhTW: Translations = {
     rsvp: '回覆出席',
     guests: '賓客名單',
     travelGuide: '交通指南',
+    schedule: '日程',
+    faq: '常見問題',
     langToggle: 'EN',
   },
 
@@ -77,6 +79,9 @@ export const zhTW: Translations = {
     assignee: '負責人',
     dueDate: '截止日期',
     addTask: '新增任務',
+    task: '任務',
+    unassigned: '— 未分配 —',
+    addNote: '添加備註...',
     save: '儲存',
     cancel: '取消',
     delete: '刪除',
@@ -203,6 +208,7 @@ export const zhTW: Translations = {
     colEmail: '郵箱',
     colSide: '方別',
     colStatus: '狀態',
+    colRoom: '房間',
     remove: '移除',
     empty: '尚未添加賓客。在上方添加第一位賓客！',
     notFound: '沒有符合搜索條件的賓客。',
@@ -210,6 +216,37 @@ export const zhTW: Translations = {
     confirmedLabel: '已確認',
     declinedLabel: '已婉拒',
     pendingLabel: '待確認',
+    roomPlaceholder: '如：套房201',
+  },
+
+  // Role Select
+  roleSelect: {
+    welcome: '歡迎！',
+    subtitle: '請選擇您的身份',
+    guest: '我是賓客',
+    guestHint: '回覆出席、交通資訊等',
+    crew: '婚禮團隊',
+    crewHint: '預算、待辦事項及籌備',
+    codePlaceholder: '請輸入團隊密碼',
+    codeError: '密碼不正確，請重試。',
+    enter: '進入',
+  },
+
+  // Schedule
+  schedule: {
+    title: '婚禮日程',
+    date: '2026年11月1日',
+  },
+
+  // FAQ
+  faq: {
+    title: '常見問題',
+  },
+
+  // Responsibilities
+  responsibilities: {
+    title: '伴郎伴娘分工表',
+    subtitle: '提前整理好伴郎伴娘的分工明細，把事情落實到個人，婚禮當天井然有序！',
   },
 
   // Access Code Modal

@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useLang } from '../context/LanguageContext';
 import { useRole } from '../context/RoleContext';
 import { useAccess } from '../context/AccessContext';
 
 export function Navbar() {
+  useNavbarResponsiveCSS();
   const { t, lang, toggleLang } = useLang();
   const { isCrew, setRole } = useRole();
   const { clearAccess } = useAccess();
@@ -15,20 +16,21 @@ export function Navbar() {
   const guestLinks = [
     { path: '/', label: t.nav.overview },
     { path: '/rsvp', label: t.nav.rsvp },
-    { path: '/schedule', label: lang === 'en' ? 'Schedule' : '日程' },
+    { path: '/schedule', label: t.nav.schedule },
     { path: '/travel', label: t.nav.travelGuide },
-    { path: '/faq', label: 'Q+A' },
+    { path: '/faq', label: t.nav.faq },
   ];
 
   const crewLinks = [
     { path: '/', label: t.nav.overview },
     { path: '/budget', label: t.nav.budget },
     { path: '/checklist', label: t.nav.checklist },
+    { path: '/responsibilities', label: lang === 'en' ? 'Roles' : '分工' },
     { path: '/rsvp', label: t.nav.rsvp },
     { path: '/guests', label: t.nav.guests },
-    { path: '/schedule', label: lang === 'en' ? 'Schedule' : '日程' },
+    { path: '/schedule', label: t.nav.schedule },
     { path: '/travel', label: t.nav.travelGuide },
-    { path: '/faq', label: 'Q+A' },
+    { path: '/faq', label: t.nav.faq },
   ];
 
   const links = isCrew ? crewLinks : guestLinks;
@@ -186,19 +188,22 @@ const styles: Record<string, React.CSSProperties> = {
   },
 };
 
-// Add responsive CSS via a style tag
-const responsiveCSS = document.createElement('style');
-responsiveCSS.textContent = `
-  @media (max-width: 768px) {
-    .nav-desktop { display: none !important; }
-    .nav-mobile { display: flex !important; }
-  }
-  @media (min-width: 769px) {
-    .nav-desktop { display: flex !important; }
-    .nav-mobile { display: none !important; }
-  }
-`;
-if (!document.getElementById('navbar-responsive')) {
-  responsiveCSS.id = 'navbar-responsive';
-  document.head.appendChild(responsiveCSS);
+function useNavbarResponsiveCSS() {
+  useEffect(() => {
+    if (document.getElementById('navbar-responsive')) return;
+    const style = document.createElement('style');
+    style.id = 'navbar-responsive';
+    style.textContent = `
+      @media (max-width: 768px) {
+        .nav-desktop { display: none !important; }
+        .nav-mobile { display: flex !important; }
+      }
+      @media (min-width: 769px) {
+        .nav-desktop { display: flex !important; }
+        .nav-mobile { display: none !important; }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => { style.remove(); };
+  }, []);
 }

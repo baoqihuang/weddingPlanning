@@ -7,6 +7,8 @@ export const en = {
     rsvp: 'RSVP',
     guests: 'Guests',
     travelGuide: 'Travel Guide',
+    schedule: 'Schedule',
+    faq: 'Q+A',
     langToggle: '繁中',
   },
 
@@ -75,6 +77,9 @@ export const en = {
     assignee: 'Assignee',
     dueDate: 'Due Date',
     addTask: 'Add Task',
+    task: 'Task',
+    unassigned: '— Unassigned —',
+    addNote: 'Add a note...',
     save: 'Save',
     cancel: 'Cancel',
     delete: 'Delete',
@@ -201,6 +206,7 @@ export const en = {
     colEmail: 'Email',
     colSide: 'Side',
     colStatus: 'Status',
+    colRoom: 'Room',
     remove: 'Remove',
     empty: 'No guests added yet. Add your first guest above!',
     notFound: 'No guests match your search.',
@@ -208,6 +214,37 @@ export const en = {
     confirmedLabel: 'Confirmed',
     declinedLabel: 'Declined',
     pendingLabel: 'Pending',
+    roomPlaceholder: 'e.g. Suite 201',
+  },
+
+  // Role Select
+  roleSelect: {
+    welcome: 'Welcome!',
+    subtitle: 'How would you like to continue?',
+    guest: "I'm a Guest",
+    guestHint: 'RSVP, travel info & more',
+    crew: 'Wedding Crew',
+    crewHint: 'Budget, checklist & planning',
+    codePlaceholder: 'Enter crew code',
+    codeError: 'Incorrect code. Please try again.',
+    enter: 'Enter',
+  },
+
+  // Schedule
+  schedule: {
+    title: 'Wedding Day Schedule',
+    date: 'November 1, 2026',
+  },
+
+  // FAQ
+  faq: {
+    title: 'Q+A',
+  },
+
+  // Responsibilities
+  responsibilities: {
+    title: 'Wedding Party Responsibilities',
+    subtitle: 'A clear breakdown of roles for bridesmaids and groomsmen so everything runs smoothly on the big day!',
   },
 
   // Access Code Modal

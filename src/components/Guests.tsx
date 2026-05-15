@@ -19,9 +19,10 @@ interface Guest {
 }
 
 export function Guests() {
-  const { t, lang } = useLang();
+  const { t } = useLang();
   const { isGroomBride, setAccessTier } = useAccess();
-  const [showModal, setShowModal] = useState(!isGroomBride);
+  const [dismissed, setDismissed] = useState(false);
+  const showModal = !isGroomBride && !dismissed;
   const [guests, setGuests] = useCloudStorage<Guest[]>('guests', 'wedding-guests', []);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -58,8 +59,8 @@ export function Guests() {
         <h1 className="section-title">{t.guests.title}</h1>
         <p style={{ textAlign: 'center', color: 'var(--color-text-light)' }}>{t.guests.accessPrompt}</p>
         <AccessCodeModal
-          onSuccess={(r) => { setAccessTier(r); setShowModal(false); }}
-          onCancel={() => setShowModal(false)}
+          onSuccess={(r) => { setAccessTier(r); setDismissed(true); }}
+          onCancel={() => setDismissed(true)}
         />
       </div>
     );
@@ -230,7 +231,7 @@ export function Guests() {
                   <th style={styles.th}>{t.guests.colEmail}</th>
                   <th style={styles.th}>{t.guests.colSide}</th>
                   <th style={styles.th}>{t.guests.colStatus}</th>
-                  <th style={styles.th}>{lang === 'en' ? 'Room' : '房間'}</th>
+                  <th style={styles.th}>{t.guests.colRoom}</th>
                   <th style={styles.th}></th>
                 </tr>
               </thead>
@@ -273,7 +274,7 @@ export function Guests() {
                             const val = e.target.value;
                             setGuests((prev) => prev.map((g) => g.id === guest.id ? { ...g, roomAssignment: val } : g));
                           }}
-                          placeholder={lang === 'en' ? 'e.g. Suite 201' : '如：套房201'}
+                          placeholder={t.guests.roomPlaceholder}
                           style={{ fontSize: '0.8rem', padding: '4px 8px', minWidth: '110px', border: '1px solid var(--color-primary-light)', borderRadius: '6px' }}
                         />
                       </td>

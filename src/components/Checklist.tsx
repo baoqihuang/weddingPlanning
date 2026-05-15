@@ -6,9 +6,10 @@ import { AccessCodeModal } from './AccessCodeModal';
 import { defaultChecklistItems, checklistCategories, weddingPartyMembers, type ChecklistItem } from '../data/checklistDefaults';
 
 export function Checklist() {
-  const { t, lang } = useLang();
+  const { t } = useLang();
   const { accessTier, hasCrewAccess, setAccessTier } = useAccess();
-  const [showModal, setShowModal] = useState(!hasCrewAccess);
+  const [dismissed, setDismissed] = useState(false);
+  const showModal = !hasCrewAccess && !dismissed;
   const [items, setItems] = useCloudStorage<ChecklistItem[]>('checklist', 'wedding-checklist', defaultChecklistItems);
   const [filterCat, setFilterCat] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
@@ -23,6 +24,7 @@ export function Checklist() {
   });
 
   const isGroomBride = accessTier === 'groomBride';
+  const isReadOnly = hasCrewAccess && !isGroomBride;
 
   const filteredItems = useMemo(() => {
     const statusOrder: Record<string, number> = { inProgress: 0, notStarted: 1, done: 2 };
@@ -49,8 +51,8 @@ export function Checklist() {
         <h1 className="section-title">{t.checklist.title}</h1>
         <p style={{ textAlign: 'center', color: 'var(--color-text-light)' }}>{t.checklist.accessPrompt}</p>
         <AccessCodeModal
-          onSuccess={(r) => { setAccessTier(r); setShowModal(false); }}
-          onCancel={() => setShowModal(false)}
+          onSuccess={(r) => { setAccessTier(r); setDismissed(true); }}
+          onCancel={() => setDismissed(true)}
           allowGroomsmenCode
         />
       </div>
@@ -83,6 +85,7 @@ export function Checklist() {
     <div className="container section" style={{ paddingTop: '80px' }}>
       <h1 className="section-title">
         {t.checklist.title}
+        {isReadOnly && <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginLeft: '8px' }}>{t.checklist.readOnly}</span>}
       </h1>
 
       {/* Progress */}
@@ -121,7 +124,7 @@ export function Checklist() {
         <div className="card" style={{ marginBottom: '20px' }}>
           <div style={styles.formGrid}>
             <div className="form-group">
-              <label>Task</label>
+              <label>{t.checklist.task}</label>
               <input value={newTask.task} onChange={(e) => setNewTask({ ...newTask, task: e.target.value })} />
             </div>
             <div className="form-group">
@@ -157,6 +160,7 @@ export function Checklist() {
                 checked={item.status === 'done'}
                 onChange={(e) => updateItem(item.id, { status: e.target.checked ? 'done' : 'notStarted' })}
                 style={styles.checkbox}
+                disabled={isReadOnly}
               />
             <div style={styles.itemInfo}>
               <span style={{ ...styles.itemTask, textDecoration: item.status === 'done' ? 'line-through' : 'none' }}>
@@ -169,8 +173,9 @@ export function Checklist() {
                 value={item.assignee || ''}
                 onChange={(e) => updateItem(item.id, { assignee: e.target.value })}
                 style={styles.assigneeSelect}
+                disabled={isReadOnly}
               >
-                <option value="">{lang === 'en' ? '— Unassigned —' : '— 未分配 —'}</option>
+                <option value="">{t.checklist.unassigned}</option>
                 {[...weddingPartyMembers, 'All Bridesmaids', 'All Groomsmen'].map((m) => (
                   <option key={m} value={m}>{m}</option>
                 ))}
@@ -179,8 +184,9 @@ export function Checklist() {
                 type="text"
                 value={item.notes || ''}
                 onChange={(e) => updateItem(item.id, { notes: e.target.value })}
-                placeholder={lang === 'en' ? 'Add a note...' : '添加備註...'}
+                placeholder={t.checklist.addNote}
                 style={styles.notesInput}
+                disabled={isReadOnly}
               />
             </div>
             <div style={styles.itemRight}>
@@ -188,6 +194,7 @@ export function Checklist() {
                 value={item.status}
                 onChange={(e) => updateItem(item.id, { status: e.target.value as ChecklistItem['status'] })}
                 style={{ ...styles.statusSelect, borderColor: statusColor(item.status), color: statusColor(item.status) }}
+                disabled={isReadOnly}
               >
                 <option value="notStarted">{t.checklist.status.notStarted}</option>
                 <option value="inProgress">{t.checklist.status.inProgress}</option>

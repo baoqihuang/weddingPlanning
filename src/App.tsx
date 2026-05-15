@@ -11,6 +11,7 @@ import { Budget } from './components/Budget';
 import { Checklist } from './components/Checklist';
 import { RSVP } from './components/RSVP';
 import { Guests } from './components/Guests';
+import { Responsibilities } from './components/Responsibilities';
 import { TravelGuide } from './components/TravelGuide';
 import { FAQ } from './components/FAQ';
 import { Schedule } from './components/Schedule';
@@ -39,6 +40,7 @@ function AppInner() {
         <Route path="/budget" element={<Budget />} />
         <Route path="/checklist" element={<Checklist />} />
         <Route path="/guests" element={<Guests />} />
+        <Route path="/responsibilities" element={<Responsibilities />} />
       </Routes>
     </HashRouter>
   );

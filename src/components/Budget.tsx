@@ -8,7 +8,8 @@ import { defaultBudgetItems, budgetCategories, type BudgetItem } from '../data/b
 export function Budget() {
   const { t } = useLang();
   const { isGroomBride, setAccessTier } = useAccess();
-  const [showModal, setShowModal] = useState(!isGroomBride);
+  const [dismissed, setDismissed] = useState(false);
+  const showModal = !isGroomBride && !dismissed;
   const [items, setItems] = useCloudStorage<BudgetItem[]>('budget', 'wedding-budget', defaultBudgetItems);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<BudgetItem>>({});
@@ -45,8 +46,8 @@ export function Budget() {
         <h1 className="section-title">{t.budget.title}</h1>
         <p style={{ textAlign: 'center', color: 'var(--color-text-light)' }}>{t.budget.accessPrompt}</p>
         <AccessCodeModal
-          onSuccess={(r) => { setAccessTier(r); setShowModal(false); }}
-          onCancel={() => setShowModal(false)}
+          onSuccess={(r) => { setAccessTier(r); setDismissed(true); }}
+          onCancel={() => setDismissed(true)}
         />
       </div>
     );
@@ -120,11 +121,11 @@ export function Budget() {
             </div>
             <div className="form-group">
               <label>{t.budget.estimated}</label>
-              <input type="number" value={newItem.estimated} onChange={(e) => setNewItem({ ...newItem, estimated: +e.target.value })} />
+              <input type="number" min="0" value={newItem.estimated} onChange={(e) => setNewItem({ ...newItem, estimated: Math.max(0, +e.target.value) })} />
             </div>
             <div className="form-group">
               <label>{t.budget.actual}</label>
-              <input type="number" value={newItem.actual} onChange={(e) => setNewItem({ ...newItem, actual: +e.target.value })} />
+              <input type="number" min="0" value={newItem.actual} onChange={(e) => setNewItem({ ...newItem, actual: Math.max(0, +e.target.value) })} />
             </div>
             <div className="form-group">
               <label>{t.budget.notes}</label>
@@ -153,11 +154,11 @@ export function Budget() {
                       </div>
                       <div className="form-group">
                         <label>{t.budget.estimated}</label>
-                        <input type="number" value={editForm.estimated || 0} onChange={(e) => setEditForm({ ...editForm, estimated: +e.target.value })} />
+                        <input type="number" min="0" value={editForm.estimated || 0} onChange={(e) => setEditForm({ ...editForm, estimated: Math.max(0, +e.target.value) })} />
                       </div>
                       <div className="form-group">
                         <label>{t.budget.actual}</label>
-                        <input type="number" value={editForm.actual || 0} onChange={(e) => setEditForm({ ...editForm, actual: +e.target.value })} />
+                        <input type="number" min="0" value={editForm.actual || 0} onChange={(e) => setEditForm({ ...editForm, actual: Math.max(0, +e.target.value) })} />
                       </div>
                       <div className="form-group">
                         <label>{t.budget.notes}</label>
